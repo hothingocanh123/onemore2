@@ -1,0 +1,92 @@
+#include <iostream>
+#include <cmath>
+#include <fstream>
+using namespace std;
+
+
+class staf
+{
+public:
+	char name[10];
+	int exp;
+	int sal;
+	int time;
+	int ssal;
+
+	void in(char name[10], int exp, int sal, int time)
+	{
+		cin.ignore(1000, '\n');
+		cout << "Enter name of Staff:" << endl;
+		cin.getline(this->name, 10);
+		cin.ignore(1000, '\n');
+		cout << "Enter experience of Staff:" << endl;
+		cin >> this->exp;
+		cout << "Enter salary of Staff:" << endl;
+		cin >> this->sal;
+		cout << "Enter time working of Staff" << endl;
+		cin >> this->time;
+	}	
+	void out(char name[20], int exp, int sal, int time)
+	{
+		cout << this->name << "\t\t\t" << this->exp << "\t\t\t" << this->time << "\t\t\t" << this->ssal << endl;
+	}
+
+}; 
+
+int main()
+{
+	int n;
+	char name[10];
+	int expx = 0;
+	int salx = 0;
+	int timex = 0;
+	int ssal = 0;
+	cout << "Enter number of Staff" << endl;
+	cin >> n;
+	staf s[10];
+	for (int i = 0; i < n; i++)
+	{
+		s[i].in(name, expx, salx, timex);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		if (s[i].exp < 1)
+		{
+			s[i].ssal = s[i].sal * s[i].time;
+		}
+		if (s[i].exp < 3 && s[i].exp > 1)
+		{
+			s[i].ssal = s[i].sal * s[i].time + 0.05 * (s[i].sal * s[i].time);
+		}
+		if (s[i].exp < 5 && s[i].exp > 3)
+		{
+			s[i].ssal = s[i].sal * s[i].time + 0.08 * (s[i].sal * s[i].time);
+		}
+		if (s[i].exp > 5)
+		{
+			s[i].ssal = s[i].sal * s[i].time + 0.15 * (s[i].sal * s[i].time);
+		}
+	}
+	cout << "Name Staff" << "\t\t" << "Experience" << "\t\t" << "Time Working" << "\t\t" << "Salary" << "\n\n";
+	for (int i = 0; i < n; i++)
+	{
+		s[i].out(name, expx, timex, ssal);
+	}
+	ofstream test;
+	test.open("OUTPUT.txt", ios_base::ate);
+	if (test.fail() == true)
+	{
+		cout << "Cannot open file!!!!" << endl;
+		return 0;
+	}
+	test << "Name Staff" << "\t\t" << "Experience" << "\t\t" << "Time Working" << "\t\t" << "Salary" << "\n\n";
+	for (int i = 0; i < n; i++)
+	{
+		test << "\n";
+		test << s[i].name << "\t\t\t" << s[i].exp << "\t\t\t" << s[i].time << "\t\t\t" << s[i].ssal << endl;
+	}
+
+	test.close();
+
+
+}
